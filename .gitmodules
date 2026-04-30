@@ -1,0 +1,3 @@
+[submodule "node-rhsplib"]
+	path = node-rhsplib
+	url = https://github.com/zxtwonder/node-rhsplib.git
