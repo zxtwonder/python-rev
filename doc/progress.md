@@ -51,6 +51,23 @@
 - `doc/decisions.md`
 - `doc/progress.md`
 
+## Session fixes (2026-04-30 → 2026-05-01)
+
+- **`ctx.obj` kwarg mismatch** — aligned `__main__.py` dict keys (`"serial_number"`,
+  `"parent_address"`, `"child_address"`) to `_get_expansion_hub()` parameter names.
+- **Motor/servo commands exited immediately** — added `_wait_for_sigint()` helper
+  (asyncio Event + `loop.add_signal_handler`) so `motor power`, `motor velocity`,
+  `motor position`, and `servo` block until Ctrl+C, then disable output and close.
+- **`RhspLibNativeError` naming** — C-extension exception renamed from `RhspLibError`
+  to avoid collision with `rev_expansion_hub.RhspLibError`.
+- **`py::native_enum`** — confirmed C extension uses pybind11 ≥ 3.0 native enums
+  (`IntEnum` subclasses); documented in architecture and decisions.
+- **`from __future__ import annotations`** — removed from all 25 Python source
+  files (unnecessary in Python 3.12; none had genuine forward references).
+- **Docstring audit** — verified all docstrings in rev-rhsplib, rev-core,
+  rev-expansion-hub, and rev-hub-cli against Node source and librhsp headers;
+  no fabricated claims found.
+
 ## Known limitations / not yet done
 - No automated tests
 - rev-rhsplib build not validated (requires librhsp headers + C toolchain)

@@ -41,11 +41,11 @@ USB access. pyusb requires WinUSB/libusb which conflicts with the VCP driver.
 ## D-006: Error hierarchy mirrors rev-core
 
 **Decision**: `RhspLibError` in rev-expansion-hub extends `RevHubError` (from
-rev-core), not the `RhspLibError` from rev-rhsplib.
+rev-core), not the `RhspLibNativeError` from rev-rhsplib.
 
-**Reason**: The C-extension `RhspLibError` is a low-level transport error. The
-expansion-hub layer wraps it and converts to semantic rev-core errors; uncategorised
-errors become `rev_expansion_hub.RhspLibError` (a `RevHubError`).
+**Reason**: The C-extension `RhspLibNativeError` is a low-level transport error.
+The expansion-hub layer wraps it and converts to semantic rev-core errors;
+uncategorised errors become `rev_expansion_hub.RhspLibError` (a `RevHubError`).
 
 ## D-007: I2C polling loop bug fix
 
@@ -89,3 +89,36 @@ the packed wire format.
 
 **Reason**: The C library operates on 16 packed 32-bit integers. The higher-level
 `create_led_pattern(steps)` function handles the packing for user convenience.
+
+## D-012: py::native_enum for C extension enums
+
+**Decision**: Use `py::native_enum` (pybind11 ≥ 3.0) to expose
+`SerialParity`, `SerialFlowControl`, `RhspLibErrorCode`, and `SerialErrorCode`.
+
+**Reason**: `py::native_enum` creates real Python `IntEnum` subclasses, which
+are fully compatible with `isinstance`, `match`, and type checkers. The older
+`py::enum_` creates pybind11 pseudo-enums that do not subclass `IntEnum`.
+Requires `#include <pybind11/native_enum.h>` and `.finalize()` instead of
+`.export_values()`.
+
+## D-013: RhspLibNativeError naming
+
+**Decision**: The C-extension exception is named `RhspLibNativeError`, not
+`RhspLibError`.
+
+**Reason**: `rev_expansion_hub` already exports a higher-level `RhspLibError`
+that extends `RevHubError`. Using the same name in rev-rhsplib would cause an
+import-level naming collision for code that imports from both packages.
+
+## D-014: Motor/servo CLI commands block until SIGINT
+
+**Decision**: `motor power`, `motor velocity`, `motor position`, and `servo`
+commands call `_wait_for_sigint()` after starting the output, and disable the
+output + close the hub only after SIGINT fires.
+
+**Reason**: Python's `asyncio.run()` exits as soon as the top-level coroutine
+returns, unlike Node's event loop which stays alive while the serial port is
+open. Without an explicit wait, the motor would start and the process would
+exit before Ctrl+C could be pressed. `_wait_for_sigint()` uses
+`loop.add_signal_handler` + `asyncio.Event` so the wait is asyncio-native
+(no busy-loop, no thread, compatible with the keep-alive task).

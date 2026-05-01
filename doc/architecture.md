@@ -43,10 +43,16 @@ Contains only pure Python:
 C++ pybind11 extension (`_rev_rhsplib.so`) + Python async wrappers:
 
 - **Build**: scikit-build-core + CMake; librhsp compiled as a static library
+  (`BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE` overrides librhsp's cache variable)
 - **C++ classes**: `PySerial` (wraps `RhspSerial`), `PyRevHub` (wraps `RhspRevHub`)
 - **GIL**: Released around all blocking librhsp calls with `py::gil_scoped_release`
-- **Exception**: `RhspLibException` in C++ → Python `RhspLibError` (with `error_code`
-  and optional `nack_code` attributes) via `PyErr_SetObject`
+- **Exception**: C++ `RhspLibException` → Python `RhspLibNativeError` (with `error_code:
+  RhspLibErrorCode` and `nack_code: int | None` attributes) via `PyErr_SetObject`.
+  Named `RhspLibNativeError` to avoid collision with the higher-level
+  `rev_expansion_hub.RhspLibError`.
+- **Enums**: `SerialParity`, `SerialFlowControl`, `RhspLibErrorCode`, `SerialErrorCode`
+  are exposed via `py::native_enum` (pybind11 ≥ 3.0), which creates real Python
+  `IntEnum` subclasses rather than pybind11 pseudo-enums.
 - **Python wrapper**: `Serial` and `RevHub` classes with `asyncio.Lock` per hub,
   all I/O methods run in the default thread-pool executor via `run_in_executor`
 
@@ -76,6 +82,11 @@ C++ pybind11 extension (`_rev_rhsplib.so`) + Python async wrappers:
   single detected hub when no options are given
 - **Command modules** (`command/`): one file per feature area, each exporting
   plain async functions called by Click actions via `asyncio.run()`
+- **SIGINT handling**: motor and servo commands block indefinitely via
+  `_wait_for_sigint()` — installs an `asyncio.Event` callback via
+  `loop.add_signal_handler(signal.SIGINT, stop.set)`, then `await stop.wait()`.
+  On interrupt the command disables the motor/servo output and closes the hub
+  cleanly (mirrors Node's `runOnSigint()` pattern).
 
 ## asyncio Design
 

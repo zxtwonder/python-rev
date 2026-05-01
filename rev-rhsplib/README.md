@@ -87,6 +87,18 @@ cmake --build build
 # The built _rev_rhsplib.so (or .pyd on Windows) is copied to rev_rhsplib/
 ```
 
+## Exported API
+
+| Name | Kind | Description |
+|---|---|---|
+| `Serial` | class | Async wrapper around the C-level serial port |
+| `RevHub` | class | Async wrapper around the C-level hub |
+| `SerialParity` | `IntEnum` | Parity setting for serial port configuration |
+| `SerialFlowControl` | `IntEnum` | Flow control setting for serial port configuration |
+| `RhspLibNativeError` | exception | Raised by the C extension on librhsp errors; has `error_code` (`RhspLibErrorCode`) and `nack_code` (`int \| None`) |
+| `RhspLibErrorCode` | `IntEnum` | Error codes returned by librhsp |
+| `SerialErrorCode` | `IntEnum` | Error codes specific to serial port operations |
+
 ## Type checking
 
 mypy uses `rev_rhsplib/_rev_rhsplib.pyi` for the C extension — no compiled

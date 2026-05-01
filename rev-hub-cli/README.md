@@ -137,3 +137,6 @@ rev-hub --serial DQ123456 --parent 1 version
 | `testErrorHandling` | Demonstrate error handling |
 
 Most commands accept `--continuous` to run in a loop.
+
+Motor and servo commands (`motor power`, `motor velocity`, `motor position`, `servo`) run
+until you press **Ctrl+C**. On interrupt the output is disabled and the hub is closed cleanly.
