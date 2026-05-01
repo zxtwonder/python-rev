@@ -33,6 +33,12 @@ pip install -e ../rev-core \
 mypy rev_hub_cli/
 ```
 
+## Lint
+
+```sh
+ruff check rev_hub_cli/
+```
+
 ## Compilation
 
 Pure Python — no compilation step. Only `rev-rhsplib` (a transitive dependency)

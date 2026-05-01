@@ -45,6 +45,12 @@ pip install -e ../rev-core -e ../rev-rhsplib -e ".[dev]"
 mypy rev_expansion_hub/
 ```
 
+## Lint
+
+```sh
+ruff check rev_expansion_hub/
+```
+
 ## Compilation
 
 This is a pure Python package — no compilation step. Only `rev-rhsplib` (a

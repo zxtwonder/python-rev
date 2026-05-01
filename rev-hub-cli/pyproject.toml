@@ -14,7 +14,7 @@ rev-hub = "rev_hub_cli.__main__:cli"
 
 
 [project.optional-dependencies]
-dev = ["mypy"]
+dev = ["mypy", "ruff"]
 
 [tool.mypy]
 python_version = "3.12"

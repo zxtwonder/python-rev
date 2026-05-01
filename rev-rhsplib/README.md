@@ -97,6 +97,13 @@ pip install -e ".[dev]"       # installs mypy
 mypy rev_rhsplib/
 ```
 
+## Lint
+
+```sh
+pip install -e ".[dev]"       # installs ruff
+ruff check rev_rhsplib/
+```
+
 The `.pyi` stub is the source of truth for the C extension's types. If you add
 or change bindings in `src/_rev_rhsplib.cpp`, update `rev_rhsplib/_rev_rhsplib.pyi`
 to match before running mypy.

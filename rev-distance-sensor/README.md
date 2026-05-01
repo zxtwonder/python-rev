@@ -25,6 +25,12 @@ pip install -e ../rev-core -e ../rev-rhsplib -e ../rev-expansion-hub -e ".[dev]"
 mypy rev_distance_sensor/
 ```
 
+## Lint
+
+```sh
+ruff check rev_distance_sensor/
+```
+
 ## Compilation
 
 Pure Python — no compilation step. Only `rev-rhsplib` (a transitive dependency)
