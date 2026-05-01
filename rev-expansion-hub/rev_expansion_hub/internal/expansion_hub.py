@@ -6,7 +6,7 @@ import asyncio
 import time
 from collections.abc import Callable
 
-import rev_rhsplib as _rhsplib
+from rev_rhsplib import Serial as NativeSerial, RevHub as NativeRevHub
 from rev_core.bulk_input_data import BulkInputData
 from rev_core.closed_loop_control_algorithm import ClosedLoopControlAlgorithm
 from rev_core.debug_group import DebugGroup
@@ -41,10 +41,10 @@ class ExpansionHubInternal(ExpansionHub):
     def __init__(
         self,
         is_parent: bool,
-        serial_port: _rhsplib.Serial,
+        serial_port: NativeSerial,
         serial_number: str | None = None,
     ) -> None:
-        self._native_hub = _rhsplib.RevHub()
+        self._native_hub = NativeRevHub()
         self._hub_is_parent = is_parent
         self.serial_number = serial_number
         self.serial_port = serial_port

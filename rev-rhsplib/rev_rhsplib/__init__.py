@@ -12,29 +12,14 @@ import asyncio
 from collections.abc import Callable
 from typing import Any
 
-from rev_rhsplib._rev_rhsplib import (  # type: ignore[import]
+from rev_rhsplib._rev_rhsplib import (
     Serial as _Serial,
     RevHub as _RevHub,
     SerialParity,
     SerialFlowControl,
     RhspLibError,
-    RESULT_OK,
-    ERROR_GENERAL,
-    ERROR_TIMEOUT,
-    ERROR_MSG_NUMBER_MISMATCH,
-    ERROR_NACK_RECEIVED,
-    ERROR_SERIAL,
-    ERROR_NOT_OPENED,
-    ERROR_COMMAND_NOT_SUPPORTED,
-    ERROR_UNEXPECTED_RESPONSE,
-    ERROR_NO_HUBS_DISCOVERED,
-    ERROR_ARG0_OUT_OF_RANGE,
-    ERROR_ARG5_OUT_OF_RANGE,
-    SERIAL_ERROR_GENERAL,
-    SERIAL_ERROR_OPENING,
-    SERIAL_ERROR_ARGS,
-    SERIAL_ERROR_CONFIGURE,
-    SERIAL_ERROR_IO,
+    RhspLibErrorCode,
+    SerialErrorCode,
 )
 
 __all__ = [
@@ -43,23 +28,8 @@ __all__ = [
     "SerialParity",
     "SerialFlowControl",
     "RhspLibError",
-    "RESULT_OK",
-    "ERROR_GENERAL",
-    "ERROR_TIMEOUT",
-    "ERROR_MSG_NUMBER_MISMATCH",
-    "ERROR_NACK_RECEIVED",
-    "ERROR_SERIAL",
-    "ERROR_NOT_OPENED",
-    "ERROR_COMMAND_NOT_SUPPORTED",
-    "ERROR_UNEXPECTED_RESPONSE",
-    "ERROR_NO_HUBS_DISCOVERED",
-    "ERROR_ARG0_OUT_OF_RANGE",
-    "ERROR_ARG5_OUT_OF_RANGE",
-    "SERIAL_ERROR_GENERAL",
-    "SERIAL_ERROR_OPENING",
-    "SERIAL_ERROR_ARGS",
-    "SERIAL_ERROR_CONFIGURE",
-    "SERIAL_ERROR_IO",
+    "RhspLibErrorCode",
+    "SerialErrorCode",
 ]
 
 

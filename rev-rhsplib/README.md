@@ -6,7 +6,7 @@ async Python wrappers (`rev_rhsplib`).
 
 ## Requirements
 
-- Python 3.12+
+- Python 3.12+ with development headers (`python3-dev` / `python3-devel`)
 - CMake 3.15+
 - A C11/C++17 compiler:
   - **Linux / macOS**: GCC 9+ or Clang 10+
@@ -46,10 +46,10 @@ pip install -e . --no-build-isolation
 
 ```sh
 # Debian / Ubuntu
-sudo apt install cmake build-essential
+sudo apt install cmake build-essential python3-dev
 
 # Fedora / RHEL
-sudo dnf install cmake gcc g++
+sudo dnf install cmake gcc g++ python3-devel
 ```
 
 ### macOS — install build tools

@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=68"]
-build-backend = "setuptools.backends.legacy:build"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "rev-expansion-hub"
@@ -12,9 +12,6 @@ dependencies = ["rev-core", "rev-rhsplib", "pyserial>=3.5"]
 [project.optional-dependencies]
 dev = ["mypy"]
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["rev_expansion_hub*"]
 
 [tool.mypy]
 python_version = "3.12"

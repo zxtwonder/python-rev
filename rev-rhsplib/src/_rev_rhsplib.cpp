@@ -37,6 +37,30 @@
 
 namespace py = pybind11;
 
+// ── Error code enums ──────────────────────────────────────────────────────────
+
+enum class RhspLibErrorCode : int {
+    GENERAL_ERROR          = RHSP_ERROR,
+    TIMEOUT                = RHSP_ERROR_RESPONSE_TIMEOUT,
+    MSG_NUMBER_MISMATCH    = RHSP_ERROR_MSG_NUMBER_MISMATCH,
+    NACK                   = RHSP_ERROR_NACK_RECEIVED,
+    SERIAL_ERROR           = RHSP_ERROR_SERIALPORT,
+    NOT_OPENED             = RHSP_ERROR_NOT_OPENED,
+    COMMAND_NOT_SUPPORTED  = RHSP_ERROR_COMMAND_NOT_SUPPORTED,
+    UNEXPECTED_RESPONSE    = RHSP_ERROR_UNEXPECTED_RESPONSE,
+    NO_HUBS_DISCOVERED     = RHSP_ERROR_NO_HUBS_DISCOVERED,
+    ARG_OUT_OF_RANGE_START = RHSP_ERROR_ARG_0_OUT_OF_RANGE,
+    ARG_OUT_OF_RANGE_END   = RHSP_ERROR_ARG_5_OUT_OF_RANGE,
+};
+
+enum class SerialErrorCode : int {
+    GENERAL_ERROR       = RHSP_SERIAL_ERROR,
+    UNABLE_TO_OPEN      = RHSP_SERIAL_ERROR_OPENING,
+    INVALID_ARGS        = RHSP_SERIAL_ERROR_ARGS,
+    CONFIGURATION_ERROR = RHSP_SERIAL_ERROR_CONFIGURE,
+    IO_ERROR            = RHSP_SERIAL_ERROR_IO,
+};
+
 // ── Exception ────────────────────────────────────────────────────────────────
 
 /**
@@ -1098,24 +1122,25 @@ PYBIND11_MODULE(_rev_rhsplib, m) {
         .value("Software",  RHSP_SERIAL_FLOW_CONTROL_SOFTWARE)
         .export_values();
 
-    // Error code constants
-    m.attr("RESULT_OK")                    = RHSP_RESULT_OK;
-    m.attr("ERROR_GENERAL")               = RHSP_ERROR;
-    m.attr("ERROR_TIMEOUT")               = RHSP_ERROR_RESPONSE_TIMEOUT;
-    m.attr("ERROR_MSG_NUMBER_MISMATCH")   = RHSP_ERROR_MSG_NUMBER_MISMATCH;
-    m.attr("ERROR_NACK_RECEIVED")         = RHSP_ERROR_NACK_RECEIVED;
-    m.attr("ERROR_SERIAL")                = RHSP_ERROR_SERIALPORT;
-    m.attr("ERROR_NOT_OPENED")            = RHSP_ERROR_NOT_OPENED;
-    m.attr("ERROR_COMMAND_NOT_SUPPORTED") = RHSP_ERROR_COMMAND_NOT_SUPPORTED;
-    m.attr("ERROR_UNEXPECTED_RESPONSE")   = RHSP_ERROR_UNEXPECTED_RESPONSE;
-    m.attr("ERROR_NO_HUBS_DISCOVERED")    = RHSP_ERROR_NO_HUBS_DISCOVERED;
-    m.attr("ERROR_ARG0_OUT_OF_RANGE")     = RHSP_ERROR_ARG_0_OUT_OF_RANGE;
-    m.attr("ERROR_ARG5_OUT_OF_RANGE")     = RHSP_ERROR_ARG_5_OUT_OF_RANGE;
-    m.attr("SERIAL_ERROR_GENERAL")        = RHSP_SERIAL_ERROR;
-    m.attr("SERIAL_ERROR_OPENING")        = RHSP_SERIAL_ERROR_OPENING;
-    m.attr("SERIAL_ERROR_ARGS")           = RHSP_SERIAL_ERROR_ARGS;
-    m.attr("SERIAL_ERROR_CONFIGURE")      = RHSP_SERIAL_ERROR_CONFIGURE;
-    m.attr("SERIAL_ERROR_IO")             = RHSP_SERIAL_ERROR_IO;
+    py::enum_<RhspLibErrorCode>(m, "RhspLibErrorCode")
+        .value("GENERAL_ERROR",          RhspLibErrorCode::GENERAL_ERROR)
+        .value("TIMEOUT",                RhspLibErrorCode::TIMEOUT)
+        .value("MSG_NUMBER_MISMATCH",    RhspLibErrorCode::MSG_NUMBER_MISMATCH)
+        .value("NACK",                   RhspLibErrorCode::NACK)
+        .value("SERIAL_ERROR",           RhspLibErrorCode::SERIAL_ERROR)
+        .value("NOT_OPENED",             RhspLibErrorCode::NOT_OPENED)
+        .value("COMMAND_NOT_SUPPORTED",  RhspLibErrorCode::COMMAND_NOT_SUPPORTED)
+        .value("UNEXPECTED_RESPONSE",    RhspLibErrorCode::UNEXPECTED_RESPONSE)
+        .value("NO_HUBS_DISCOVERED",     RhspLibErrorCode::NO_HUBS_DISCOVERED)
+        .value("ARG_OUT_OF_RANGE_START", RhspLibErrorCode::ARG_OUT_OF_RANGE_START)
+        .value("ARG_OUT_OF_RANGE_END",   RhspLibErrorCode::ARG_OUT_OF_RANGE_END);
+
+    py::enum_<SerialErrorCode>(m, "SerialErrorCode")
+        .value("GENERAL_ERROR",       SerialErrorCode::GENERAL_ERROR)
+        .value("UNABLE_TO_OPEN",      SerialErrorCode::UNABLE_TO_OPEN)
+        .value("INVALID_ARGS",        SerialErrorCode::INVALID_ARGS)
+        .value("CONFIGURATION_ERROR", SerialErrorCode::CONFIGURATION_ERROR)
+        .value("IO_ERROR",            SerialErrorCode::IO_ERROR);
 
     // ── Serial class ──────────────────────────────────────────────────────
     py::class_<PySerial>(m, "Serial")

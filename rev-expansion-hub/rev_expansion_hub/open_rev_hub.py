@@ -5,7 +5,7 @@ from __future__ import annotations
 import time
 
 import serial.tools.list_ports
-import rev_rhsplib as _rhsplib
+from rev_rhsplib import Serial, RevHub, SerialParity, SerialFlowControl, RhspLibError, SerialErrorCode
 from rev_core.expansion_hub import ParentExpansionHub
 from rev_core.general_errors import (
     GeneralSerialError,
@@ -20,7 +20,7 @@ from rev_expansion_hub.internal.expansion_hub import ExpansionHubInternal
 from rev_expansion_hub.internal.error_conversion import convert_error_async
 from rev_expansion_hub.start_keep_alive import start_keep_alive
 
-_open_serial_map: dict[str, _rhsplib.Serial] = {}
+_open_serial_map: dict[str, Serial] = {}
 """Maps serial port path to its open Serial object."""
 
 
@@ -62,7 +62,7 @@ async def _open_parent_hub(
     )
 
     if module_address is None:
-        addresses = await _rhsplib.RevHub.discover_rev_hubs(serial_port)
+        addresses = await RevHub.discover_rev_hubs(serial_port)
         module_address = addresses["parent_address"]
 
     try:
@@ -113,7 +113,7 @@ async def _open_hub_and_children(serial_number: str) -> ParentExpansionHub:
 
     serial_port = _open_serial_map[serial_port_path]
 
-    discovered = await _rhsplib.RevHub.discover_rev_hubs(serial_port)
+    discovered = await RevHub.discover_rev_hubs(serial_port)
     parent_address = discovered["parent_address"]
     parent_hub = await open_parent_expansion_hub(serial_number, parent_address)
 
@@ -134,7 +134,7 @@ async def get_serial_port_path_for_ex_hub_serial(serial_number: str) -> str:
     raise RuntimeError(f"Unable to find serial port for {serial_number}")
 
 
-def close_serial_port(serial_port: _rhsplib.Serial) -> None:
+def close_serial_port(serial_port: Serial) -> None:
     """Close *serial_port* and remove it from the open-ports registry.
 
     This is the preferred way to close a serial port — it keeps the internal
@@ -150,26 +150,27 @@ def close_serial_port(serial_port: _rhsplib.Serial) -> None:
 async def _open_serial_port(
     port_path: str,
     serial_number: str | None,
-) -> _rhsplib.Serial:
-    serial = _rhsplib.Serial()
+) -> Serial:
+    serial = Serial()
     try:
         await serial.open(
             port_path,
             460800,
             8,
-            _rhsplib.SerialParity.None_,
+            SerialParity.None_,
             1,
-            _rhsplib.SerialFlowControl.None_,
+            SerialFlowControl.None_,
         )
-    except _rhsplib.RhspLibError as e:
+    except RhspLibError as e:
         code = e.error_code
-        if code == _rhsplib.SERIAL_ERROR_ARGS:
+        sc = SerialErrorCode
+        if code == sc.INVALID_ARGS:
             raise InvalidSerialArguments(port_path)
-        if code == _rhsplib.SERIAL_ERROR_OPENING:
+        if code == sc.UNABLE_TO_OPEN:
             raise UnableToOpenSerialError(port_path)
-        if code == _rhsplib.SERIAL_ERROR_CONFIGURE:
+        if code == sc.CONFIGURATION_ERROR:
             raise SerialConfigurationError(port_path)
-        if code == _rhsplib.SERIAL_ERROR_IO:
+        if code == sc.IO_ERROR:
             raise SerialIoError(port_path)
         raise GeneralSerialError(port_path)
     return serial

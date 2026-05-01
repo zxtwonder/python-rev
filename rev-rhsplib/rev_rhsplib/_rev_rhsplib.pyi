@@ -12,45 +12,47 @@ class RhspLibError(RuntimeError):
     """Exception raised when librhsp returns an error code.
 
     Attributes:
-        error_code: The negative librhsp error code (e.g. ``ERROR_TIMEOUT``).
+        error_code: The negative librhsp error code (e.g. ``RhspLibErrorCode.TIMEOUT``).
         nack_code: NACK reason code from the hub (only present when
-            ``error_code == ERROR_NACK_RECEIVED``).
+            ``error_code == RhspLibErrorCode.NACK``).
     """
 
     error_code: int
-    nack_code: int  # only present when error_code == ERROR_NACK_RECEIVED
+    nack_code: int  # only present when error_code == RhspLibErrorCode.NACK
 
 # ── Enums ─────────────────────────────────────────────────────────────────────
 
 class SerialParity(IntEnum):
-    None_: int
-    Odd: int
-    Even: int
+    None_ = ...
+    Odd = ...
+    Even = ...
 
 class SerialFlowControl(IntEnum):
-    None_: int
-    Hardware: int
-    Software: int
+    None_ = ...
+    Hardware = ...
+    Software = ...
 
-# ── Error code constants ──────────────────────────────────────────────────────
+# ── Error code enums ──────────────────────────────────────────────────────────
 
-RESULT_OK: int
-ERROR_GENERAL: int
-ERROR_TIMEOUT: int
-ERROR_MSG_NUMBER_MISMATCH: int
-ERROR_NACK_RECEIVED: int
-ERROR_SERIAL: int
-ERROR_NOT_OPENED: int
-ERROR_COMMAND_NOT_SUPPORTED: int
-ERROR_UNEXPECTED_RESPONSE: int
-ERROR_NO_HUBS_DISCOVERED: int
-ERROR_ARG0_OUT_OF_RANGE: int
-ERROR_ARG5_OUT_OF_RANGE: int
-SERIAL_ERROR_GENERAL: int
-SERIAL_ERROR_OPENING: int
-SERIAL_ERROR_ARGS: int
-SERIAL_ERROR_CONFIGURE: int
-SERIAL_ERROR_IO: int
+class RhspLibErrorCode(IntEnum):
+    GENERAL_ERROR = ...
+    TIMEOUT = ...
+    MSG_NUMBER_MISMATCH = ...
+    NACK = ...
+    SERIAL_ERROR = ...
+    NOT_OPENED = ...
+    COMMAND_NOT_SUPPORTED = ...
+    UNEXPECTED_RESPONSE = ...
+    NO_HUBS_DISCOVERED = ...
+    ARG_OUT_OF_RANGE_START = ...
+    ARG_OUT_OF_RANGE_END = ...
+
+class SerialErrorCode(IntEnum):
+    GENERAL_ERROR = ...
+    UNABLE_TO_OPEN = ...
+    INVALID_ARGS = ...
+    CONFIGURATION_ERROR = ...
+    IO_ERROR = ...
 
 # ── Serial ────────────────────────────────────────────────────────────────────
 
