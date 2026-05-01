@@ -14,7 +14,7 @@ option(RHSP_BUILD_TESTS "Build librhsp unit tests" OFF)
 add_subdirectory("${LIBRHSP_DIR}" librhsp_build EXCLUDE_FROM_ALL)
 
 # ── pybind11 ─────────────────────────────────────────────────────────────────
-find_package(pybind11 REQUIRED)
+find_package(pybind11 3.0 REQUIRED)
 
 # ── Python extension ─────────────────────────────────────────────────────────
 pybind11_add_module(_rev_rhsplib src/_rev_rhsplib.cpp)

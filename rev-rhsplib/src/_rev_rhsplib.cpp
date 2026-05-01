@@ -17,6 +17,7 @@
 #include <vector>
 
 #include <pybind11/pybind11.h>
+#include <pybind11/native_enum.h>
 #include <pybind11/stl.h>
 
 // librhsp public headers
@@ -1108,19 +1109,19 @@ PYBIND11_MODULE(_rev_rhsplib, m) {
     });
 
     // ── Enums ─────────────────────────────────────────────────────────────
-    py::enum_<RhspSerialParity>(m, "SerialParity")
+    py::native_enum<RhspSerialParity>(m, "SerialParity", "enum.IntEnum")
         .value("None_", RHSP_SERIAL_PARITY_NONE)
         .value("Odd",   RHSP_SERIAL_PARITY_ODD)
         .value("Even",  RHSP_SERIAL_PARITY_EVEN)
-        .export_values();
+        .finalize();
 
-    py::enum_<RhspSerialFlowControl>(m, "SerialFlowControl")
+    py::native_enum<RhspSerialFlowControl>(m, "SerialFlowControl", "enum.IntEnum")
         .value("None_",     RHSP_SERIAL_FLOW_CONTROL_NONE)
         .value("Hardware",  RHSP_SERIAL_FLOW_CONTROL_HARDWARE)
         .value("Software",  RHSP_SERIAL_FLOW_CONTROL_SOFTWARE)
-        .export_values();
+        .finalize();
 
-    py::enum_<RhspLibErrorCode>(m, "RhspLibErrorCode")
+    py::native_enum<RhspLibErrorCode>(m, "RhspLibErrorCode", "enum.IntEnum")
         .value("GENERAL_ERROR",          RhspLibErrorCode::GENERAL_ERROR)
         .value("TIMEOUT",                RhspLibErrorCode::TIMEOUT)
         .value("MSG_NUMBER_MISMATCH",    RhspLibErrorCode::MSG_NUMBER_MISMATCH)
@@ -1131,14 +1132,16 @@ PYBIND11_MODULE(_rev_rhsplib, m) {
         .value("UNEXPECTED_RESPONSE",    RhspLibErrorCode::UNEXPECTED_RESPONSE)
         .value("NO_HUBS_DISCOVERED",     RhspLibErrorCode::NO_HUBS_DISCOVERED)
         .value("ARG_OUT_OF_RANGE_START", RhspLibErrorCode::ARG_OUT_OF_RANGE_START)
-        .value("ARG_OUT_OF_RANGE_END",   RhspLibErrorCode::ARG_OUT_OF_RANGE_END);
+        .value("ARG_OUT_OF_RANGE_END",   RhspLibErrorCode::ARG_OUT_OF_RANGE_END)
+        .finalize();
 
-    py::enum_<SerialErrorCode>(m, "SerialErrorCode")
+    py::native_enum<SerialErrorCode>(m, "SerialErrorCode", "enum.IntEnum")
         .value("GENERAL_ERROR",       SerialErrorCode::GENERAL_ERROR)
         .value("UNABLE_TO_OPEN",      SerialErrorCode::UNABLE_TO_OPEN)
         .value("INVALID_ARGS",        SerialErrorCode::INVALID_ARGS)
         .value("CONFIGURATION_ERROR", SerialErrorCode::CONFIGURATION_ERROR)
-        .value("IO_ERROR",            SerialErrorCode::IO_ERROR);
+        .value("IO_ERROR",            SerialErrorCode::IO_ERROR)
+        .finalize();
 
     // ── Serial class ──────────────────────────────────────────────────────
     py::class_<PySerial>(m, "Serial")
