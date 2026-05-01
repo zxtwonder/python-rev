@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from rev_core.expansion_hub import ExpansionHub
 from rev_distance_sensor import registers as reg

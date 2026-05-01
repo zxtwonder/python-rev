@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from abc import abstractmethod
-from typing import TYPE_CHECKING
 
 from rev_core.rev_hub import RevHub, ParentRevHub
 from rev_core.bulk_input_data import BulkInputData
@@ -9,9 +8,7 @@ from rev_core.closed_loop_control_algorithm import ClosedLoopControlAlgorithm
 from rev_core.debug_group import DebugGroup
 from rev_core.digital_channel_direction import DigitalChannelDirection
 from rev_core.digital_state import DigitalState
-from rev_core.i2c_read_status import I2CReadStatus
 from rev_core.i2c_speed_code import I2CSpeedCode
-from rev_core.i2c_write_status import I2CWriteStatus
 from rev_core.led_pattern import LedPattern
 from rev_core.module_interface import ModuleInterface
 from rev_core.module_status import ModuleStatus

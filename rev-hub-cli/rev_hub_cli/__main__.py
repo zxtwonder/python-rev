@@ -12,7 +12,6 @@ import click
 
 from rev_core.digital_state import DigitalState
 from rev_core.expansion_hub import ExpansionHub
-from rev_core.rev_hub import ParentRevHub, RevHub
 from rev_expansion_hub import (
     get_possible_expansion_hub_serial_numbers,
     open_connected_expansion_hubs,

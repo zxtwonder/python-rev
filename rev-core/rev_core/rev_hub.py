@@ -2,12 +2,9 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from collections.abc import Callable
-from typing import TYPE_CHECKING, Literal
+from typing import Literal
 
 from rev_core.rev_hub_type import RevHubType
-
-if TYPE_CHECKING:
-    from rev_core.expansion_hub import ExpansionHub
 
 
 class RevHub(ABC):

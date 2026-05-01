@@ -14,9 +14,7 @@ from rev_core.digital_channel_direction import DigitalChannelDirection
 from rev_core.digital_state import DigitalState
 from rev_core.expansion_hub import ExpansionHub
 from rev_core.general_errors import NoExpansionHubWithAddressError, TimeoutError
-from rev_core.i2c_read_status import I2CReadStatus
 from rev_core.i2c_speed_code import I2CSpeedCode
-from rev_core.i2c_write_status import I2CWriteStatus
 from rev_core.led_pattern import LedPattern
 from rev_core.module_interface import ModuleInterface
 from rev_core.module_status import ModuleStatus
@@ -24,7 +22,7 @@ from rev_core.motor_mode import MotorMode
 from rev_core.nack_errors import I2cOperationInProgressError, ParameterOutOfRangeError
 from rev_core.pid_coefficients import PidCoefficients
 from rev_core.pidf_coefficients import PidfCoefficients
-from rev_core.rev_hub import RevHub, ParentRevHub
+from rev_core.rev_hub import RevHub
 from rev_core.rev_hub_type import RevHubType
 from rev_core.rgb import Rgb
 from rev_core.verbosity_level import VerbosityLevel
