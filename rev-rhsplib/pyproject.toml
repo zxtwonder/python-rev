@@ -1,0 +1,20 @@
+[build-system]
+requires = ["scikit-build-core>=0.9", "pybind11>=2.12"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "rev-rhsplib"
+version = "2.1.0"
+description = "Low-level Python/C++ bindings for librhsp (REV Hub Serial Protocol)"
+requires-python = ">=3.12"
+dependencies = ["rev-core"]
+
+[project.optional-dependencies]
+dev = ["mypy"]
+
+[tool.scikit-build]
+cmake.build-type = "Release"
+wheel.packages = ["rev_rhsplib"]
+
+[tool.scikit-build.cmake.define]
+RHSP_BUILD_TESTS = "OFF"

@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "rev-core"
+version = "1.2.0"
+description = "Common interfaces and data types for REV Robotics hub devices"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["mypy"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["rev_core*"]

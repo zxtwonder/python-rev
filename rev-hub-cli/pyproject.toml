@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "rev-hub-cli"
+version = "1.1.2"
+description = "Command-line tool for interacting with REV Robotics Expansion Hubs"
+requires-python = ">=3.12"
+dependencies = ["rev-core", "rev-expansion-hub", "rev-distance-sensor", "click>=8.0"]
+
+[project.scripts]
+rev-hub = "rev_hub_cli.__main__:cli"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["rev_hub_cli*"]
