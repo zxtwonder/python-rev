@@ -17,7 +17,7 @@ from rev_rhsplib._rev_rhsplib import (
     RevHub as _RevHub,
     SerialParity,
     SerialFlowControl,
-    RhspLibError,
+    RhspLibNativeError,
     RhspLibErrorCode,
     SerialErrorCode,
 )
@@ -27,7 +27,7 @@ __all__ = [
     "RevHub",
     "SerialParity",
     "SerialFlowControl",
-    "RhspLibError",
+    "RhspLibNativeError",
     "RhspLibErrorCode",
     "SerialErrorCode",
 ]

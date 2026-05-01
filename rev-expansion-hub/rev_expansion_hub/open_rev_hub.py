@@ -5,7 +5,7 @@ from __future__ import annotations
 import time
 
 import serial.tools.list_ports
-from rev_rhsplib import Serial, RevHub, SerialParity, SerialFlowControl, RhspLibError, SerialErrorCode
+from rev_rhsplib import Serial, RevHub, SerialParity, SerialFlowControl, RhspLibNativeError, SerialErrorCode
 from rev_core.expansion_hub import ParentExpansionHub
 from rev_core.general_errors import (
     GeneralSerialError,
@@ -161,16 +161,15 @@ async def _open_serial_port(
             1,
             SerialFlowControl.None_,
         )
-    except RhspLibError as e:
+    except RhspLibNativeError as e:
         code = e.error_code
-        sc = SerialErrorCode
-        if code == sc.INVALID_ARGS:
+        if code == SerialErrorCode.INVALID_ARGS:
             raise InvalidSerialArguments(port_path)
-        if code == sc.UNABLE_TO_OPEN:
+        if code == SerialErrorCode.UNABLE_TO_OPEN:
             raise UnableToOpenSerialError(port_path)
-        if code == sc.CONFIGURATION_ERROR:
+        if code == SerialErrorCode.CONFIGURATION_ERROR:
             raise SerialConfigurationError(port_path)
-        if code == sc.IO_ERROR:
+        if code == SerialErrorCode.IO_ERROR:
             raise SerialIoError(port_path)
         raise GeneralSerialError(port_path)
     return serial

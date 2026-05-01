@@ -8,17 +8,17 @@ from enum import IntEnum
 
 # ── Error ─────────────────────────────────────────────────────────────────────
 
-class RhspLibError(RuntimeError):
+class RhspLibNativeError(RuntimeError):
     """Exception raised when librhsp returns an error code.
 
     Attributes:
         error_code: The negative librhsp error code (e.g. ``RhspLibErrorCode.TIMEOUT``).
-        nack_code: NACK reason code from the hub (only present when
-            ``error_code == RhspLibErrorCode.NACK``).
+        nack_code: NACK reason code from the hub, or ``None`` when
+            ``error_code != RhspLibErrorCode.NACK``.
     """
 
     error_code: int
-    nack_code: int  # only present when error_code == RhspLibErrorCode.NACK
+    nack_code: int | None
 
 # ── Enums ─────────────────────────────────────────────────────────────────────
 

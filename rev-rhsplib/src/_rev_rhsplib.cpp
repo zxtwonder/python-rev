@@ -78,7 +78,7 @@ struct RhspLibException : public std::exception {
     RhspLibException(int code, uint8_t nack)
         : error_code(code), has_nack(true), nack_code(nack) {}
 
-    const char* what() const noexcept override { return "RhspLibError"; }
+    const char* what() const noexcept override { return "RhspLibNativeError"; }
 };
 
 /** Throw RhspLibException if result is negative. */
@@ -1088,7 +1088,7 @@ PYBIND11_MODULE(_rev_rhsplib, m) {
 
     // ── Error class ───────────────────────────────────────────────────────
     // Defined first so the translator can reference it.
-    static py::exception<RhspLibException> py_rhsp_error(m, "RhspLibError",
+    static py::exception<RhspLibException> py_rhsp_error(m, "RhspLibNativeError",
                                                           PyExc_RuntimeError);
 
     py::register_exception_translator([](std::exception_ptr p) {
@@ -1099,10 +1099,8 @@ PYBIND11_MODULE(_rev_rhsplib, m) {
                                                 PyUnicode_FromString(e.what()));
             if (exc) {
                 PyObject_SetAttrString(exc, "error_code", PyLong_FromLong(e.error_code));
-                if (e.has_nack) {
-                    PyObject_SetAttrString(exc, "nack_code",
-                                           PyLong_FromLong(e.nack_code));
-                }
+                PyObject_SetAttrString(exc, "nack_code",
+                    e.has_nack ? PyLong_FromLong(e.nack_code) : Py_None);
                 PyErr_SetObject(py_rhsp_error.ptr(), exc);
                 Py_DECREF(exc);
             }
