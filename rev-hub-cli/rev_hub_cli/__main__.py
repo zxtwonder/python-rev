@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import asyncio
+import signal
 import sys
 from collections.abc import Callable
 from typing import cast
@@ -65,6 +66,12 @@ def _run(coro):
     except Exception as e:
         click.echo(f"Encountered unexpected error:\n{e}", err=True)
         sys.exit(1)
+
+
+async def _wait_for_sigint() -> None:
+    stop = asyncio.Event()
+    asyncio.get_event_loop().add_signal_handler(signal.SIGINT, stop.set)
+    await stop.wait()
 
 
 # ── Global options ────────────────────────────────────────────────────────────
@@ -383,6 +390,9 @@ def cmd_motor_power(ctx: click.Context, channel: int, power: float) -> None:
     async def _go():
         hub, close = await _get_expansion_hub(**ctx.obj)
         await run_motor_constant_power(hub, channel, power)
+        await _wait_for_sigint()
+        await hub.set_motor_channel_enable(channel, False)
+        close()
     _run(_go())
 
 
@@ -395,6 +405,9 @@ def cmd_motor_velocity(ctx: click.Context, channel: int, speed: int) -> None:
     async def _go():
         hub, close = await _get_expansion_hub(**ctx.obj)
         await run_motor_constant_velocity(hub, channel, speed)
+        await _wait_for_sigint()
+        await hub.set_motor_channel_enable(channel, False)
+        close()
     _run(_go())
 
 
@@ -411,6 +424,9 @@ def cmd_motor_position(
     async def _go():
         hub, close = await _get_expansion_hub(**ctx.obj)
         await run_motor_to_position(hub, channel, velocity, position, tolerance)
+        await _wait_for_sigint()
+        await hub.set_motor_channel_enable(channel, False)
+        close()
     _run(_go())
 
 
@@ -668,6 +684,9 @@ def cmd_servo(ctx: click.Context, channel: int, pulse_width: int, frame_width: i
     async def _go():
         hub, close = await _get_expansion_hub(**ctx.obj)
         await run_servo(hub, channel, pulse_width, frame_width)
+        await _wait_for_sigint()
+        await hub.set_servo_enable(channel, False)
+        close()
     _run(_go())
 
 
