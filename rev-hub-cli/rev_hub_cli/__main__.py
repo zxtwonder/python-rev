@@ -78,9 +78,9 @@ def _run(coro):
 def cli(ctx: click.Context, serial_number: str | None, parent_address: int | None, child_address: int | None) -> None:
     """rev-hub — CLI for REV Robotics Expansion Hubs."""
     ctx.ensure_object(dict)
-    ctx.obj["serial"] = serial_number
-    ctx.obj["parent"] = parent_address
-    ctx.obj["child"] = child_address
+    ctx.obj["serial_number"] = serial_number
+    ctx.obj["parent_address"] = parent_address
+    ctx.obj["child_address"] = child_address
 
 
 # ── Hub selection helper ──────────────────────────────────────────────────────
