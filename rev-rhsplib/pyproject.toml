@@ -18,3 +18,8 @@ wheel.packages = ["rev_rhsplib"]
 
 [tool.scikit-build.cmake.define]
 RHSP_BUILD_TESTS = "OFF"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+

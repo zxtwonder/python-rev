@@ -87,8 +87,45 @@ cmake --build build
 # The built _rev_rhsplib.so (or .pyd on Windows) is copied to rev_rhsplib/
 ```
 
-## With type-checking extras
+## Type checking
+
+mypy uses `rev_rhsplib/_rev_rhsplib.pyi` for the C extension — no compiled
+`.so` is required to run the type checker.
 
 ```sh
-pip install -e ".[dev]"       # adds mypy
+pip install -e ".[dev]"       # installs mypy
+mypy rev_rhsplib/
 ```
+
+The `.pyi` stub is the source of truth for the C extension's types. If you add
+or change bindings in `src/_rev_rhsplib.cpp`, update `rev_rhsplib/_rev_rhsplib.pyi`
+to match before running mypy.
+
+## Compilation
+
+The C extension must be compiled before the package can be imported at runtime.
+There are two ways to do this:
+
+### Via pip (recommended)
+
+pip invokes CMake automatically:
+
+```sh
+pip install .                          # regular install
+pip install -e . --no-build-isolation  # editable install
+```
+
+### Via CMake directly
+
+Useful when iterating on the C++ source without reinstalling:
+
+```sh
+pip install pybind11                   # puts pybind11 CMake config on PATH
+cmake -S . -B build \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DRHSP_BUILD_TESTS=OFF
+cmake --build build --parallel
+```
+
+The built `_rev_rhsplib.so` (Linux/macOS) or `_rev_rhsplib.pyd` (Windows) is
+written to `rev_rhsplib/` and can be imported immediately without installing.

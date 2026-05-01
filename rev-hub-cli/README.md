@@ -22,6 +22,22 @@ pip install .
 
 This installs the `rev-hub` command on your `PATH`.
 
+## Type checking
+
+```sh
+pip install -e ../rev-core \
+            -e ../rev-rhsplib \
+            -e ../rev-expansion-hub \
+            -e ../rev-distance-sensor \
+            -e ".[dev]"
+mypy rev_hub_cli/
+```
+
+## Compilation
+
+Pure Python — no compilation step. Only `rev-rhsplib` (a transitive dependency)
+requires compilation; see [rev-rhsplib/README.md](../rev-rhsplib/README.md).
+
 ## Usage
 
 ```

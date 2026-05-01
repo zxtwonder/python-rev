@@ -34,6 +34,22 @@ For development:
 pip install -e ".[dev]"
 ```
 
+## Type checking
+
+All upstream packages must be installed so mypy can resolve their types.
+The C extension is typed via `rev_rhsplib/_rev_rhsplib.pyi` — it does not need
+to be compiled to run the type checker.
+
+```sh
+pip install -e ../rev-core -e ../rev-rhsplib -e ".[dev]"
+mypy rev_expansion_hub/
+```
+
+## Compilation
+
+This is a pure Python package — no compilation step. Only `rev-rhsplib` (a
+dependency) requires compilation; see [rev-rhsplib/README.md](../rev-rhsplib/README.md).
+
 ## Quick start
 
 ```python

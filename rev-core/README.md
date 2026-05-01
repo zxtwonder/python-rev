@@ -24,3 +24,14 @@ With type-checking extras:
 ```sh
 pip install -e ".[dev]"
 ```
+
+## Type checking
+
+```sh
+pip install -e ".[dev]"   # installs mypy
+mypy rev_core/
+```
+
+## Compilation
+
+No compilation step — this is a pure Python package.

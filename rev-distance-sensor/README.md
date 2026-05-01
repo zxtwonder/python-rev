@@ -18,6 +18,18 @@ pip install ../rev-expansion-hub
 pip install .
 ```
 
+## Type checking
+
+```sh
+pip install -e ../rev-core -e ../rev-rhsplib -e ../rev-expansion-hub -e ".[dev]"
+mypy rev_distance_sensor/
+```
+
+## Compilation
+
+Pure Python — no compilation step. Only `rev-rhsplib` (a transitive dependency)
+requires compilation; see [rev-rhsplib/README.md](../rev-rhsplib/README.md).
+
 ## Quick start
 
 ```python

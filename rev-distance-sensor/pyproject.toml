@@ -9,6 +9,14 @@ description = "REV 2m Distance Sensor (VL53L0X) driver for REV Expansion Hubs"
 requires-python = ">=3.12"
 dependencies = ["rev-core", "rev-expansion-hub"]
 
+[project.optional-dependencies]
+dev = ["mypy"]
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["rev_distance_sensor*"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+

@@ -15,3 +15,11 @@ rev-hub = "rev_hub_cli.__main__:cli"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["rev_hub_cli*"]
+
+[project.optional-dependencies]
+dev = ["mypy"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+
