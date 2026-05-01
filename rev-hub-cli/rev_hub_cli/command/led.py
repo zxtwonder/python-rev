@@ -1,7 +1,5 @@
 """LED color and pattern commands."""
 
-from __future__ import annotations
-
 import re
 
 from rev_core.expansion_hub import ExpansionHub

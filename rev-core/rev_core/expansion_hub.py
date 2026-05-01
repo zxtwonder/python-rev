@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from abc import abstractmethod
 
 from rev_core.rev_hub import RevHub, ParentRevHub

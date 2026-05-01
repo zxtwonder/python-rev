@@ -1,7 +1,5 @@
 """Discovery helpers for finding connected REV Expansion Hubs."""
 
-from __future__ import annotations
-
 import serial.tools.list_ports
 from rev_core.expansion_hub import ParentExpansionHub
 from rev_expansion_hub.open_rev_hub import open_expansion_hub_and_all_children

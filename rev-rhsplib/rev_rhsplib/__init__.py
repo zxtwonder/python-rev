@@ -6,8 +6,6 @@ stall the asyncio event loop.  A per-hub :class:`asyncio.Lock` serialises
 concurrent calls on the same hub instance.
 """
 
-from __future__ import annotations
-
 import asyncio
 from collections.abc import Callable
 from typing import Any

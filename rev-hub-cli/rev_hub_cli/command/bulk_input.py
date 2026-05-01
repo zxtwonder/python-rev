@@ -1,7 +1,5 @@
 """Bulk input data command."""
 
-from __future__ import annotations
-
 import dataclasses
 import json
 

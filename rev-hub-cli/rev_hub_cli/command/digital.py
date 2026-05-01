@@ -1,7 +1,5 @@
 """Digital I/O commands."""
 
-from __future__ import annotations
-
 from rev_core.digital_channel_direction import DigitalChannelDirection
 from rev_core.digital_state import DigitalState
 from rev_core.expansion_hub import ExpansionHub

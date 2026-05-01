@@ -1,7 +1,5 @@
 """Interface query command."""
 
-from __future__ import annotations
-
 from rev_core.expansion_hub import ExpansionHub
 
 

@@ -1,7 +1,5 @@
 """Data log and debug log-level commands."""
 
-from __future__ import annotations
-
 from rev_core.debug_group import DebugGroup
 from rev_core.expansion_hub import ExpansionHub
 from rev_core.verbosity_level import VerbosityLevel

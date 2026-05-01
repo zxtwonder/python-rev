@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """rev-hub — Command-line tool for REV Robotics Expansion Hubs."""
 
-from __future__ import annotations
-
 import asyncio
 import signal
 import sys

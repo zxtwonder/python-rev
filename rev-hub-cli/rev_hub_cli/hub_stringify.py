@@ -1,7 +1,5 @@
 """Utilities for formatting hub information as human-readable text."""
 
-from __future__ import annotations
-
 from typing import cast
 
 from rev_core.rev_hub import ParentRevHub, RevHub

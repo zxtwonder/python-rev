@@ -1,7 +1,5 @@
 """Functions for opening REV Expansion Hubs over serial."""
 
-from __future__ import annotations
-
 import time
 
 import serial.tools.list_ports

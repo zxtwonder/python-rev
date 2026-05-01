@@ -1,7 +1,5 @@
 """High-level :class:`DistanceSensor` wrapper for the REV 2m Distance Sensor."""
 
-from __future__ import annotations
-
 import asyncio
 from collections.abc import Callable
 

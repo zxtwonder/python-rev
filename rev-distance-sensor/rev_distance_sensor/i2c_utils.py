@@ -1,7 +1,5 @@
 """I2C read/write helpers operating on a :class:`~rev_core.ExpansionHub`."""
 
-from __future__ import annotations
-
 from rev_core.expansion_hub import ExpansionHub
 
 

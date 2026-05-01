@@ -1,7 +1,5 @@
 """Convert low-level :class:`~rev_rhsplib.RhspLibError` exceptions to rev-core errors."""
 
-from __future__ import annotations
-
 from collections.abc import Callable, Awaitable
 from typing import TypeVar
 

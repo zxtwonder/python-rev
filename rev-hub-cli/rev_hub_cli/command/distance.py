@@ -1,7 +1,5 @@
 """Distance sensor command."""
 
-from __future__ import annotations
-
 from rev_core.expansion_hub import ExpansionHub
 from rev_distance_sensor import DistanceSensor
 

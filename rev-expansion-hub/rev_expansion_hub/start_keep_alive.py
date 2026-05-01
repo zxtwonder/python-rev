@@ -1,7 +1,5 @@
 """Keep-alive task management for :class:`~rev_expansion_hub.internal.ExpansionHubInternal`."""
 
-from __future__ import annotations
-
 import asyncio
 
 from rev_expansion_hub.internal.expansion_hub import ExpansionHubInternal

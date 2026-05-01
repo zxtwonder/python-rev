@@ -1,7 +1,5 @@
 """Abstract interface for distance sensor hardware drivers."""
 
-from __future__ import annotations
-
 from abc import ABC, abstractmethod
 
 

@@ -1,7 +1,5 @@
 """Motor control commands."""
 
-from __future__ import annotations
-
 import json
 
 from rev_core.closed_loop_control_algorithm import ClosedLoopControlAlgorithm

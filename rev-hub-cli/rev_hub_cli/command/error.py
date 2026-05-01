@@ -1,7 +1,5 @@
 """Error-handling demonstration command."""
 
-from __future__ import annotations
-
 from rev_core.motor_mode import MotorMode
 from rev_expansion_hub import (
     NackError,

@@ -1,7 +1,5 @@
 """VL53L0X Time-of-Flight distance sensor driver."""
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 
 from rev_core.expansion_hub import ExpansionHub

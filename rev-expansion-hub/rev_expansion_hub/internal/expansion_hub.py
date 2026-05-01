@@ -1,7 +1,5 @@
 """Concrete asyncio implementation of :class:`~rev_core.ExpansionHub`."""
 
-from __future__ import annotations
-
 import asyncio
 import time
 from collections.abc import Callable
