@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from rev_core.motor_mode import MotorMode
 from rev_expansion_hub import (
     NackError,
     MotorNotFullyConfiguredError,
@@ -14,7 +15,7 @@ from rev_expansion_hub import (
 async def error() -> None:
     hubs = await open_connected_expansion_hubs()
     try:
-        await hubs[0].set_motor_channel_mode(2, 1, False)  # intentionally wrong mode
+        await hubs[0].set_motor_channel_mode(2, MotorMode.REGULATED_VELOCITY, False)
         await hubs[0].set_motor_constant_power(2, 0)
         await hubs[0].set_motor_channel_enable(2, True)
         print("Expected error, but got none")

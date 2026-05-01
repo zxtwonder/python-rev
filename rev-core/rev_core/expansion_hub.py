@@ -558,5 +558,5 @@ class ExpansionHub(RevHub):
         """
 
 
-ParentExpansionHub = type("ParentExpansionHub", (ParentRevHub, ExpansionHub), {})
-"""Type alias for a hub that is both a :class:`ParentRevHub` and an :class:`ExpansionHub`."""
+class ParentExpansionHub(ParentRevHub, ExpansionHub):
+    """A hub that is both a :class:`ParentRevHub` and an :class:`ExpansionHub`."""

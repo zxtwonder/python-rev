@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import asyncio
 import sys
+from collections.abc import Callable
+from typing import cast
 
 import click
 
@@ -88,7 +90,7 @@ async def _get_expansion_hub(
     serial_number: str | None,
     parent_address: int | None,
     child_address: int | None,
-) -> tuple[ExpansionHub, callable]:
+) -> tuple[ExpansionHub, Callable[[], None]]:
     """Return ``(hub, close)`` based on the provided addressing options."""
     if child_address is not None and not (1 <= child_address <= 255):
         raise click.ClickException(f"{child_address} is not a valid child address")
@@ -121,20 +123,23 @@ async def _open_with_serial(
     serial_number: str,
     parent_address: int,
     child_address: int | None,
-) -> tuple[ExpansionHub, callable]:
+) -> tuple[ExpansionHub, Callable[[], None]]:
     parent = await open_parent_expansion_hub(serial_number, parent_address)
     if child_address is None or child_address == parent.module_address:
         return parent, parent.close
     child = await parent.add_child_by_address(child_address)
     if child.is_expansion_hub():
-        return child, lambda: (parent.close(), child.close())
+        def _close_both() -> None:
+            parent.close()
+            child.close()
+        return cast(ExpansionHub, child), _close_both
     raise click.ClickException(f"Hub ({serial_number}) {child_address} is not an Expansion Hub")
 
 
 async def _open_with_address(
     parent_address: int,
     child_address: int | None,
-) -> tuple[ExpansionHub, callable]:
+) -> tuple[ExpansionHub, Callable[[], None]]:
     serial_numbers = await get_possible_expansion_hub_serial_numbers()
     if len(serial_numbers) > 1:
         raise click.ClickException(
@@ -145,7 +150,7 @@ async def _open_with_address(
         return parent, parent.close
     child = await parent.add_child_by_address(child_address)
     if child.is_expansion_hub():
-        return child, parent.close
+        return cast(ExpansionHub, child), parent.close
     raise click.ClickException(f"No expansion hub found with module address {child_address}")
 
 
