@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rev-console"
+version = "0.1.0"
+description = "Interactive CLI for REV Robotics Expansion Hubs"
+requires-python = ">=3.12"
+dependencies = [
+    "rev-hub-cli",
+    "textual>=0.80",
+    "click>=8.0",
+]
+
+[project.scripts]
+rev-console = "rev_console.__main__:cli"
+
+[project.optional-dependencies]
+dev = ["mypy", "ruff"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
