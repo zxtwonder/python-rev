@@ -1,4 +1,4 @@
-"""Textual widgets and CSS for the rev-console watch panel."""
+"""Textual widgets for the rev-console watch panel."""
 
 from typing import cast
 
@@ -9,77 +9,6 @@ from textual.reactive import reactive
 from textual.widgets import Label, Static
 
 from rev_console.commands import CommandCallable
-
-_APP_CSS = """
-Screen {
-    background: $background;
-}
-
-#main {
-    height: 1fr;
-}
-
-#left {
-    width: 1fr;
-}
-
-#output {
-    height: 1fr;
-    border: solid $primary;
-}
-
-#cmd-input {
-    height: 3;
-}
-
-#watch-panel {
-    width: 32;
-    min-width: 24;
-    border-left: solid $accent;
-    background: $surface;
-    display: none;
-}
-
-.panel-title {
-    background: $accent;
-    color: $text;
-    text-align: center;
-    text-style: bold;
-    padding: 0 1;
-    height: 1;
-}
-
-WatchWidget {
-    height: auto;
-    border: solid $primary;
-    margin: 1;
-    padding: 1;
-}
-
-.watch-header {
-    height: 1;
-}
-
-.watch-name {
-    width: 1fr;
-}
-
-.close-btn {
-    width: 3;
-    color: $error;
-    background: transparent;
-}
-
-.close-btn:hover {
-    background: $error 20%;
-}
-
-.watch-value {
-    color: $success;
-    text-style: bold;
-    padding-top: 1;
-}
-"""
 
 
 class _CloseButton(Static):

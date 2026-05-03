@@ -42,11 +42,87 @@ from rev_console.commands import (
 )
 from rev_console.history import load_history, save_history
 from rev_console.log_writer import LogWriter
-from rev_console.widgets import WatchPanel, WatchWidget, _APP_CSS
+from rev_console.widgets import WatchPanel, WatchWidget
 
 
 class RevConsoleApp(App[None]):
-    CSS = _APP_CSS
+    CSS = """
+Screen {
+    background: $background;
+}
+
+#main {
+    height: 1fr;
+}
+
+#left {
+    width: 1fr;
+}
+
+#output {
+    height: 1fr;
+    border: solid $primary;
+    padding: 0 1;
+}
+
+#output:focus {
+    border: solid $accent;
+}
+
+#cmd-input {
+    height: 3;
+    border: solid $primary;
+    padding: 0 1;
+}
+
+#watch-panel {
+    width: 32;
+    min-width: 24;
+    border-left: solid $accent;
+    background: $surface;
+    display: none;
+}
+
+.panel-title {
+    background: $accent;
+    color: $text;
+    text-align: center;
+    text-style: bold;
+    padding: 0 1;
+    height: 1;
+}
+
+WatchWidget {
+    height: auto;
+    border: solid $primary;
+    margin: 1;
+    padding: 1;
+}
+
+.watch-header {
+    height: 1;
+}
+
+.watch-name {
+    width: 1fr;
+}
+
+.close-btn {
+    width: 3;
+    color: $error;
+    background: transparent;
+}
+
+.close-btn:hover {
+    background: $error 20%;
+}
+
+.watch-value {
+    color: $success;
+    text-style: bold;
+    padding-top: 1;
+}
+"""
 
     BINDINGS = [
         Binding("ctrl+c", "cancel_command", "Cancel", show=True),
@@ -109,6 +185,12 @@ class RevConsoleApp(App[None]):
     def on_key(self, event: events.Key) -> None:
         inp = self.query_one("#cmd-input", Input)
         if self.focused is not inp:
+            if event.is_printable and event.character:
+                event.prevent_default()
+                inp.focus()
+                pos = inp.cursor_position
+                inp.value = inp.value[:pos] + event.character + inp.value[pos:]
+                inp.cursor_position = pos + 1
             return
         if event.key == "up":
             event.prevent_default()
