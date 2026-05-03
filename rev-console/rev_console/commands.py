@@ -208,9 +208,8 @@ class BatteryCommand(Command):
 
                 return _create_read_action(_read, continuous)
             case _:
-                return _create_error_action(
-                    f"Unknown subcommand {rest!r}. Expected 'voltage' or 'current'."
-                )
+                sub = rest[0] if rest else "<none>"
+                return _create_error_action(f"Invalid subcommand {sub!r}.\n{self.help_text}")
 
 
 class DigitalCommand(Command):
@@ -287,9 +286,8 @@ class DigitalCommand(Command):
                 return _create_valid_action(_call)
 
             case _:
-                return _create_error_action(
-                    f"Unknown subcommand {rest[:1]!r}. Expected read, readall, write, or writeall."
-                )
+                sub = rest[0] if rest else "<none>"
+                return _create_error_action(f"Invalid subcommand {sub!r}.\n{self.help_text}")
 
 
 class MotorCommand(Command):
@@ -499,11 +497,8 @@ class MotorCommand(Command):
                 return _create_valid_action(_call)
 
             case _:
-                return _create_error_action(
-                    f"Unknown motor subcommand {rest[:1]!r}. "
-                    "Expected power, velocity, position, disable, encoder, current, "
-                    "pid, pidf, or alert."
-                )
+                sub = rest[0] if rest else "<none>"
+                return _create_error_action(f"Invalid subcommand {sub!r}.\n{self.help_text}")
 
 
 class ServoCommand(Command):
@@ -548,9 +543,8 @@ class ServoCommand(Command):
                 return _create_valid_action(_call)
 
             case _:
-                return _create_error_action(
-                    "Expected: servo <ch> <pulse_width> [frame_width]  or  servo disable <ch>."
-                )
+                sub = rest[0] if rest else "<none>"
+                return _create_error_action(f"Invalid subcommand {sub!r}.\n{self.help_text}")
 
 
 class DistanceCommand(Command):
@@ -804,9 +798,7 @@ class WatchCommand(Command):
             case "close":
                 return self._parse_close(rest[1:])
             case _:
-                return _create_error_action(
-                    f"Unknown watch subcommand {rest[0]!r}. Expected add, list, or close."
-                )
+                return _create_error_action(f"Invalid subcommand {rest[0]!r}.\n{self.help_text}")
 
     def _parse_add(self, rest: list[str]) -> CommandAction:
         rate = 1.0
